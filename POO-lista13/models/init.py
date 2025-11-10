@@ -1,15 +1,8 @@
 from .admin import *
-from .client import *
-from .professional import *
+from .cliente import *
+from .profissional import *
 from .schedule import *
 from .service import *
-from .users_id import *
-from .abc_dao import AbstractDAO
+from .users import *
+from .abc_dao import *
 
-# Arquivos '__init__.py' servem para poder realizar um "import" mais ou menos assim:
-# from models import *
-# Ao invés de:
-# from models.admin import *
-# from models.client import *
-# from models.professional import *
-# ...

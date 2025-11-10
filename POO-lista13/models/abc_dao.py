@@ -10,12 +10,11 @@ def get_file_path(file: str) -> str:
     return os.path.join(base_dir, file)
 
 class AbstractDAO(ABC):
-    """Classe Abstrata que padroniza todos os DAOs do programa."""
+    """ padroniza todos os DAOs do programa."""
     _objects: list[Any] = []
-    _json_file_path_str: str = "../data/file.json" # Uma String mais ou menos assim, indicando o caminho do arquivo JSON do DAO em relação ao arquivo.
-    _json_file_path: str = "" # Caminho após passar pelo método "get_file_path". É inicializado quando a Subclasse for inicializada.
-    _from_json_method: Callable[[dict[str, Any]], Any] = lambda obj: object # Método que transforma o JSON em um objeto do DAO.
-
+    _json_file_path_str: str = "../data/file.json" 
+    _json_file_path: str = "" 
+    _from_json_method: Callable[[dict[str, Any]], Any] = lambda obj: object 
     @classmethod
     def __init_subclass__(cls) -> None:
         """Ao iniciar uma Classe que Herda algo dessa Classe, ela terá seu atributo de classe 'json_file_path' alterado conforme o seu 'json_file_path_str'."""

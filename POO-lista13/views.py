@@ -1,6 +1,10 @@
 from datetime import datetime, timedelta
 from typing import Any, Type, Optional
-from models import *
+from models import (
+    AbstractDAO, ClientDAO, ServiceDAO, ScheduleDAO, ProfessionalDAO, AdminDAO,
+    Client, Service, Schedule, Professional, Admin, UsersTypeIDs
+)
+
 
 class View:
     @staticmethod

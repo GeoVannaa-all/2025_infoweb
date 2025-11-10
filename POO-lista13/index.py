@@ -1,4 +1,10 @@
-from templates import *
+from templates import (
+    LoginUI, SigninUI, ClientProfileUI, ScheduleClientUI,
+    SetServiceClientUI, ProfessionalProfileUI, ScheduleProfessionalUI,
+    SetScheduleProfessionalUI, ConfirmScheduleProfessionalUI,
+    ClienteUI, KeepServiceUI, KeepScheduleUI, KeepProfessionalUI,
+    AdminProfileUI)
+    
 from views import View
 import streamlit as st
 
@@ -49,9 +55,9 @@ class IndexUI:
     def log_out_sidebar() -> None:
         """Coloca o botão de 'sair da conta' no Sidebar."""
         if st.sidebar.button("Sair", type="primary"):
-            del st.session_state["user_id"]
-            del st.session_state["user_type"]
-            st.rerun()
+           st.session_state.pop("user_id", None)
+           st.session_state.pop("user_type", None)
+        st.rerun()
 
     @staticmethod
     def sidebar() -> None:
