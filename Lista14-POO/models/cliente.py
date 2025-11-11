@@ -1,3 +1,6 @@
+import json
+from models.dao import DAO
+
 class Cliente:
     def __init__(self, id, nome, email, fone, senha):
         self.set_id(id)
@@ -6,54 +9,44 @@ class Cliente:
         self.set_fone(fone)
         self.set_senha(senha)
 
-    def get_id(self):
-        return self.__id
+    def get_id(self): return self.id
+    def get_nome(self): return self.nome
+    def get_email(self): return self.email
+    def get_fone(self): return self.fone
+    def get_senha(self): return self.senha
 
-    def get_nome(self):
-        return self.__nome
-
-    def get_email(self):
-        return self.__email
-
-    def get_fone(self):
-        return self.__fone
-
-    def get_senha(self):
-        return self.__senha
-
-    def set_id(self, id):
-        self.__id = id
-
-    def set_nome(self, nome):
-        if not nome or nome.strip() == "":
-            raise ValueError("O nome do cliente não pode estar vazio.")
-        self.__nome = nome
-
-    def set_email(self, email):
-        if not email or email.strip() == "":
-            raise ValueError("O e-mail do cliente não pode estar vazio.")
-        self.__email = email
-
-    def set_fone(self, fone):
-        self.__fone = fone
-
-    def set_senha(self, senha):
-        if not senha or senha.strip() == "":
-            raise ValueError("A senha do cliente não pode estar vazia.")
-        self.__senha = senha
-
-    def __str__(self):
-        return f"{self.__id} - {self.__nome} ({self.__email})"
+    def set_id(self, id): self.id = id
+    def set_nome(self, nome): self.nome = nome
+    def set_email(self, email): self.email = email
+    def set_fone(self, fone): self.fone = fone
+    def set_senha(self, senha): self.senha = senha
 
     def to_json(self):
-        return {
-            "id": self.__id,
-            "nome": self.__nome,
-            "email": self.__email,
-            "fone": self.__fone,
-            "senha": self.__senha
-        }
+        return {"id": self.id, "nome": self.nome, "email": self.email, "fone": self.fone, "senha": self.senha}
 
     @staticmethod
     def from_json(dic):
         return Cliente(dic["id"], dic["nome"], dic["email"], dic["fone"], dic["senha"])
+
+    def __str__(self):
+        return f"{self.id} - {self.nome} - {self.email} - {self.fone}"
+
+
+class ClienteDAO(DAO):
+    objetos = []
+
+    @classmethod
+    def abrir(cls):
+        cls.objetos = []
+        try:
+            with open("clientes.json", "r") as f:
+                dados = json.load(f)
+                for dic in dados:
+                    cls.objetos.append(Cliente.from_json(dic))
+        except FileNotFoundError:
+            pass
+
+    @classmethod
+    def salvar(cls):
+        with open("clientes.json", "w") as f:
+            json.dump(cls.objetos, f, default=Cliente.to_json)
